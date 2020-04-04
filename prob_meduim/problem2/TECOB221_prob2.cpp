@@ -1,59 +1,42 @@
-//problem:Encryption
-#include <bits/stdc++.h>
+#!/bin/python
 
-using namespace std;
-// Complete the encryption function below.
-string encryption(string s) {
-	int len=s.length(),k=0;
-	int val=sqrt(len),val2=val*(val+1),val3;
-	string str;
-	if(val2<len)
-	{
-		val=val+1;
-		val3=val;
-	}
-	else
-	{
-		val3=val+1;
-	}
+import math
+import os
+import random
+import re
+import sys
+from math import sqrt, floor, ceil
 
-	char arr[val][val3];
-	k=0;
-	for(int i=0;i<val;i++)
-	{
-		for(int j=0;j<val3;j++)
-		{
-			arr[i][j]=s[k];			
-			k++;
-		}
-	}
+# Complete the encryption function below.
+def encryption(s):
+    code=s[:]
+    l=len(s)
+    col=int(math.ceil(l**(0.5)))
+    row=int(col)-1
+    if row*col<l:
+        row=col
+        
+    l=[]
+    for i in range(row):
+        l.append(code[:col])
+        code=code[col:]
 
-	for(int i=0;i<val3;i++)
-	{
-		for(int j=0;j<val;j++)
-		{
-			char a=arr[j][i];			
-			str=str+a;
-			k++;
-		}cout<<endl;
-		if((i+1)<val3)	
-		{	str=str+' ';
-		}
-	}
-return str;}	
+    encrypted=''
+    for i in range(col):
+        for j in range(row):
+            if i<len(l[j]):
+                encrypted+=l[j][i]
+        encrypted+=" "    
 
-int main()
-{
-    ofstream fout(getenv("OUTPUT_PATH"));
+    return encrypted  
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
-    string s;
-    getline(cin, s);
+    s = raw_input()
 
-    string result = encryption(s);
+    result = encryption(s)
 
-    fout << result << "\n";
+    fptr.write(result + '\n')
 
-    fout.close();
-
-    return 0;
-}
+    fptr.close()
+	    
